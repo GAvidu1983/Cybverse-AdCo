@@ -8,7 +8,9 @@
 """ Cybverse-AdCo is a little tool to help kids to improve the quality
 of their activities passed behind the computer. The main Objective is to
 let a given time of free surfing and an unlimited access to excellent
-ressources. 
+ressources.
+
+MAIN Program
 
 """
 # ---------------------------------------------------------------------------
