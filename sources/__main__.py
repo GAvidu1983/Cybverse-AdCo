@@ -16,15 +16,12 @@ MAIN Program
 # ---------------------------------------------------------------------------
 # Imports
 # ---------------------------------------------------------------------------
-from PIL import ImageGrab
-import numpy as np
-from datetime import datetime
-import cv2
-import pytesseract
 from shell import shell
 import time
 from threading import Timer
 import PySimpleGUI as sg
+
+import windowsTC as WTC
 
 #
 # Classes Declarations
@@ -47,18 +44,7 @@ shell('mkdir ' + G.tmp)
 # ---------------------------------------------------------------------------
 # Background Function
 # ---------------------------------------------------------------------------
-def ScreenCapture(G=G):
-    img = ImageGrab.grab(bbox=(0, 0, 1400, 450)) #x, y, w, h
-    img_np = np.array(img)
-    #frame = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
-    frame = cv2.cvtColor(img_np, cv2.COLOR_BGR2GRAY)
-    cv2.Canny(frame, 100, 200)
-    now = datetime.now()
-    date_time = now.strftime("%Y%m%d-%H%M%S")
-    f = G.tmp + date_time + '.png'
-    cv2.imwrite(f,frame)
-    print(f)
-
+#import windowsTC as WTC
 
 
 class RepeatTimer(Timer):
@@ -68,8 +54,11 @@ class RepeatTimer(Timer):
 
 def dummyfn(msg="foo"):
     print(msg)
-
-timer = RepeatTimer(2, ScreenCapture)
+    
+    
+WTCinstance = WTC.WTC()
+   
+timer = RepeatTimer(60, WTCinstance.WTC_test)
 timer.start()
 #time.sleep(8)
 #timer.cancel()
@@ -82,17 +71,21 @@ timer.start()
 
 sg.theme('DarkAmber')    # Keep things interesting for your users
 
-layout = [[sg.Text('Persistent window')],      
-          [sg.Input(key='-IN-')],      
-          [sg.Button('Read'), sg.Exit()]]      
+layout = [[sg.Text('Internet temps libre')],      
+          [sg.ProgressBar(WTCinstance.limit1, orientation='h', size=(20,20), key='-PROG-')]]#,
+          #[sg.Text('Internet temps intelligent')],      
+          #[sg.ProgressBar(WTCinstance.limit2, orientation='h', size=(20,20), key='-PROG2-')]]      
 
-window = sg.Window('Window that stays open', layout)      
+window = sg.Window('CyberSpace - AdCo', layout,location = (500,0),grab_anywhere=True,disable_close=True)      
 
 while True:                             # The Event Loop
-    event, values = window.read() 
+    event, values = window.read(timeout = 1000) 
     print(event, values)       
     if event == sg.WIN_CLOSED or event == 'Exit':
-        break      
+        break
+    
+    window['-PROG-'].update(WTCinstance.count)
+    #window['-PROG2-'].update(WTCinstance.count)
 
 window.close()
 timer.cancel()
