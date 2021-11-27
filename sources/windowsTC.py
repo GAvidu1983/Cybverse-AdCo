@@ -35,7 +35,11 @@ class WTC :
         self.local = "/home/pi/.CybVAdCo/"
 
         self.Lrestrictions = ['Firefox','Chromium']
-        self.Lexceptions = ['wikipedia','frischool','gomath','duolingo','scratch','raspberry','ultimaker','linux','junior','studentzone']
+        self.Lexceptions = ['wikipedia','frischool','gomath','duolingo','scratch',
+                            'raspberry','ultimaker','linux','junior','studentzone','cambridge','office.com','tutodraw',
+                            'je progresse en dessin','heliox','les découvreurs','thingiverse','turtle',
+                            'framboise314','vikidia','codeclubworld','il était une fois','c\'est pas sorcier'
+                            ]
         
         self.count = 0
         self.limit1 = 50
@@ -62,10 +66,15 @@ class WTC :
         return l
 
     def ScreenCapture(self):
-        img = ImageGrab.grab(bbox=(0, 0, 1400, 450)) #x, y, w, h
+        img = ImageGrab.grab(bbox=(100, 90, 1400, 150)) #x, y, w, h  zone 1 navigator adresse html
+        img2 = ImageGrab.grab(bbox=(100, 1000, 1400, 1080)) #x, y, w, h # zone 2 Youtbeur name
         img_np = np.array(img)
+        print(img_np.shape)
+        img_np2 = np.array(img2)
+        print(img_np2.shape)
+        imgtot = cv2.vconcat([img_np,img_np2])
         #frame = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
-        frame = cv2.cvtColor(img_np, cv2.COLOR_BGR2GRAY)
+        frame = cv2.cvtColor(imgtot, cv2.COLOR_BGR2GRAY)
         cv2.Canny(frame, 100, 200)
         #now = datetime.now()
         #date_time = now.strftime("%Y%m%d-%H%M%S")
@@ -91,6 +100,11 @@ class WTC :
     
     
     def WTC_test(self):
+        #placement of restricted windows in good position
+        shell('wmctrl -r "Firefox" -b add,maximized_vert,maximized_horz')
+        shell('wmctrl -r "chromium" -b add,maximized_vert,maximized_horz')
+        time.sleep(0.5)
+            
         l = self.WTC_capture()
         for f in l.output() :
             print(f)

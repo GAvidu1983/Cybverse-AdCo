@@ -4,3 +4,4 @@ $sudo apt-get install python3-opencv
 $sudo pip3 install PySimpleGUI
 $sudo apt install wmctrl
 $sudo apt-get install tesseract-ocr
+$sudo pip3 install pyscreenshot
