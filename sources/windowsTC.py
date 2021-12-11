@@ -38,7 +38,8 @@ class WTC :
         self.Lexceptions = ['wikipedia','frischool','gomath','duolingo','scratch',
                             'raspberry','ultimaker','linux','junior','studentzone','cambridge','office.com','tutodraw',
                             'je progresse en dessin','heliox','les découvreurs','thingiverse','turtle',
-                            'framboise314','vikidia','codeclubworld','il était une fois','c\'est pas sorcier'
+                            'framboise314','vikidia','codeclubworld','il était une fois','c\'est pas sorcier',
+                            'Davi Draw', 'DaviDraw','educlasse','funweb.epfl','studio.youtube','Cybverse-AdCo','Cybverse',
                             ]
         
         self.count = 0
